@@ -17,11 +17,9 @@ module.exports = {
       },
       returned_at: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       comments: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       book_id: {
           type: Sequelize.INTEGER,
