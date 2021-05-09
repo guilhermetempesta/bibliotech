@@ -35,9 +35,15 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
       }, 
-      user_id: {
+      user_loan_id: {
           type: Sequelize.UUID,
           allowNull: false,
+          references: { model: 'users', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+      }, 
+      user_return_id: {
+          type: Sequelize.UUID,
           references: { model: 'users', key: 'id' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',

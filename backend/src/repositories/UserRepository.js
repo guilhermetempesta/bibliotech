@@ -105,6 +105,17 @@ class UserRepository {
             throw err
         }
     }
+
+    async getPassword(id) {
+        try {
+            const { password } = await User.findOne({ 
+                where: {id: id} 
+            })
+            return password
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = { UserRepository }

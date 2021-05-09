@@ -33,7 +33,8 @@ class Loan extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+        this.belongsTo(models.User, { foreignKey: 'userLoanId', as: 'userLoan' });
+        this.belongsTo(models.User, { foreignKey: 'userReturnId', as: 'userReturn' });
         this.belongsTo(models.Student, { foreignKey: 'studentId', as: 'student' });
         this.belongsTo(models.Book, { foreignKey: 'bookId', as: 'book' });
     }

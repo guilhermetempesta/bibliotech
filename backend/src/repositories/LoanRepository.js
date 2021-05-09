@@ -34,18 +34,21 @@ class LoanRepository {
                 attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments'],
                 where: filters,
                 include: [{
-                  association: 'user',
-                  attributes: ['id', 'name']
+                    association: 'student',
+                    attributes: ['id', 'name', 'phone', 'class']
                 },{
-                  association: 'student',
-                  attributes: ['id', 'name', 'phone', 'class']
+                    association: 'book',
+                    attributes: ['id', 'code', 'title', 'publisher'],
+                    include: [{
+                      association: 'author',
+                      attributes: ['id', 'nome'],
+                    }] 
                 },{
-                  association: 'book',
-                  attributes: ['id', 'code', 'title', 'publisher'],
-                  include: [{
-                    association: 'author',
-                    attributes: ['id', 'nome'],
-                  }] 
+                    association: 'userLoan',
+                    attributes: ['id', 'name']
+                },{
+                    association: 'userReturn',
+                    attributes: ['id', 'name']
                 }],
                 order: ['id'],
                 limit: limit,                // limite por pagina  
@@ -62,9 +65,6 @@ class LoanRepository {
             const loan = await Loan.findOne({ 
               attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments'],
               include: [{
-                association: 'user',
-                attributes: ['id', 'name']
-              },{
                 association: 'student',
                 attributes: ['id', 'name', 'phone', 'class']
               },{
@@ -74,6 +74,12 @@ class LoanRepository {
                   association: 'author',
                   attributes: ['id', 'nome'],
                 }] 
+              },{
+                association: 'userLoan',
+                attributes: ['id', 'name']
+              },{
+                association: 'userReturn',
+                attributes: ['id', 'name']
               }],
               where: {id: id}
             })
@@ -113,10 +119,14 @@ function queryFilter (queryParams) {
   let filters = {};
 
   const { book, student, status, initialLoanDate, finalLoanDate, initialReturnDate, finalReturnDate, 
-          initialReturnedAt, finalReturnedAt, user } = queryParams;
+          initialReturnedAt, finalReturnedAt, userLoan, userReturn } = queryParams;
   
-  if (user) {
-      filters = {...filters, userId: user};
+  if (userLoan) {
+      filters = {...filters, userLoanId: userLoan};
+  }
+
+  if (userReturn) {
+    filters = {...filters, userReturnId: userReturn};
   }
 
   if (book) {
