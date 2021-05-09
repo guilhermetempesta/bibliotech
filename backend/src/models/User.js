@@ -70,7 +70,8 @@ class User extends Model {
     }
 
     static associate(models) {
-      this.hasMany(models.Loan, { foreignKey: 'userId', as: 'loans'});
+      this.hasMany(models.Loan, { foreignKey: 'userLoanId', as: 'loans'});
+      this.hasMany(models.Loan, { foreignKey: 'userReturnId', as: 'loansReturn'});
     }
 }
 

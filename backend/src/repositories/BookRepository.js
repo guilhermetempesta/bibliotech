@@ -56,17 +56,14 @@ class BookRepository {
         }
     }
 
-    async getByAuthor(id, page) {
+    async getByAuthor(id, page) { 
         try {
             const limit = 50; // limite usado para paginacao            
-            const { count, rows } = await Author.findAndCountAll({ 
-                attributes: [
-                    'id', 'code', 'title', 'publisher', 'localization',                    
-                    ['name', 'author']
-                ],
+            const { count, rows } = await Book.findAndCountAll({ 
+                attributes: ['id', 'code', 'title', 'publisher', 'localization'],
                 include: [{
                     association: 'author',
-                    attributes: []
+                    attributes: ['id', 'name']
                 }],                
                 where: {authorId: id},
                 order: ['id'],

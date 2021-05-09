@@ -29,8 +29,8 @@ class BookController {
     async index (req, res, next) {
         try {                        
             const bookRepository = new BookRepository;
-            const authors = await bookRepository.get(); 
-            res.status(200).json(authors);    
+            const books = await bookRepository.get(); 
+            res.status(200).json(books);    
         } catch (error) {
             next(error); 
         }
@@ -60,6 +60,18 @@ class BookController {
             next(error); 
         }
     }     
+
+    async indexByAuthor (req, res, next) {
+        try {                        
+            const id = req.params.id;
+            const page = req.query.page || 1;                       
+            const bookRepository = new BookRepository;
+            const books = await bookRepository.getByAuthor(id, page); 
+            res.status(200).json(books);    
+        } catch (error) {
+            next(error); 
+        }
+    }
 }
 
 module.exports = { BookController }

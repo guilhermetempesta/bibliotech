@@ -1,5 +1,5 @@
 const Loan = require('../models/Loan');
-const { Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const { NotFoundError } = require('../utils/errors');
 
 class LoanRepository {
@@ -16,7 +16,7 @@ class LoanRepository {
     async update(data) {
         try {
             await Loan.update(data,{   
-                    where: {id: data.id}
+                    where: {id: data.id} 
                 }
             );
         } catch(err) {
@@ -41,7 +41,7 @@ class LoanRepository {
                     attributes: ['id', 'code', 'title', 'publisher'],
                     include: [{
                       association: 'author',
-                      attributes: ['id', 'nome'],
+                      attributes: ['id', 'name'],
                     }] 
                 },{
                     association: 'userLoan',
@@ -72,7 +72,7 @@ class LoanRepository {
                 attributes: ['id', 'code', 'title', 'publisher'],
                 include: [{
                   association: 'author',
-                  attributes: ['id', 'nome'],
+                  attributes: ['id', 'name'],
                 }] 
               },{
                 association: 'userLoan',
@@ -83,8 +83,7 @@ class LoanRepository {
               }],
               where: {id: id}
             })
-            loan.content = loan.content.toString();
-
+            
             return loan;
         } catch (err) {
             throw err
@@ -106,6 +105,32 @@ class LoanRepository {
                 where: {id: id} 
             });
             if (rowsDeleted===0) throw new NotFoundError('Empréstimo não encontrado!'); 
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async getByBook(id, page, pending) { 
+        try {
+            let filters = { bookId: id }
+            if (pending) filters = {...filters, returnedAt: null} 
+
+            const limit = 50; // limite usado para paginacao            
+            const { count, rows } = await Loan.findAndCountAll({ 
+                attributes: [ 'id', 'loanDate', 'returnDate', 'returnedAt'],
+                include: [{
+                    association: 'book',
+                    attributes: ['id', 'code', 'title']
+                },{
+                    association: 'student',
+                    attributes: ['id', 'name', 'phone', 'class']
+                }],                
+                where: filters,
+                order: ['id'],
+                limit: limit,                // limite por pagina  
+                offset: page * limit - limit // deslocamento                 
+            })
+            return { data: rows, count, limit}  
         } catch (err) {
             throw err
         }

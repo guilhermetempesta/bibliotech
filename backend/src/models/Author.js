@@ -19,7 +19,7 @@ class Author extends Model {
     }
 
     static associate(models) {
-      this.hasMany(models.Books, { foreignKey: 'authorId', as: 'books'});
+      this.hasMany(models.Book, { foreignKey: 'authorId', as: 'books'});
     }
 }
 

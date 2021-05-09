@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt-nodejs')
 const { UserRepository } = require('../repositories/UserRepository');
 const { InvalidArgumentError, BadRequestError } = require('../utils/errors');
 

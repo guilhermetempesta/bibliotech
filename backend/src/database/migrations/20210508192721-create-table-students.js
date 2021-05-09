@@ -6,6 +6,8 @@ module.exports = {
       id: { 
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,  
       },
       name: {
         type: Sequelize.STRING,
@@ -13,15 +15,12 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       class: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       comments: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,

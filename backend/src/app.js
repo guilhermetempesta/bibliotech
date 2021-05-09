@@ -3,9 +3,12 @@
 require('dotenv').config();
 
 (function () {
+    require('./database');
     
     const app = require("express")();
     const consign = require('consign');
+    const errorHandler = require('./middlewares/errors');
+    
     const port = process.env.PORT;
     
     consign()
@@ -17,6 +20,8 @@ require('dotenv').config();
         .then('./src/routes')
         .into(app); 
     
+    app.use(errorHandler);
+        
     app.listen(port, () => { 
         console.log(`Server is running in port ${port}`)
     })

@@ -6,6 +6,8 @@ module.exports = {
       id: { 
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,  
       },
       loan_date: {
         type: Sequelize.DATEONLY,

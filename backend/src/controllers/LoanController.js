@@ -1,3 +1,4 @@
+
 const { LoanReturnService } = require('../services/LoanReturnService');
 const { LoanRepository } = require('../repositories/LoanRepository');
 const { NotFoundError } = require('../utils/errors');
@@ -6,7 +7,7 @@ class LoanController {
 
     async store (req, res, next) {
         try {
-            const loan = req.body;
+            const loan = req.body; 
             loan.userLoanId = req.user.id;
             const loanRepository = new LoanRepository;
             await loanRepository.create(loan);
@@ -78,12 +79,27 @@ class LoanController {
     }
 
     async cancelLoanReturn (req, res, next) {
-        try {                          
-            const id = req.param.id;   
+        try {                    
+            const id = req.params.id;   
             const loanReturn = new LoanReturnService;
             await loanReturn.cancel(id);
             res.status(200).json({ message: "Devolução cancelada com sucesso." });
         } catch (error) {
+            next(error); 
+        }
+    }    
+    
+    async indexByBook (req, res, next) {
+        try {
+            const id = req.params.id;
+            const page = req.query.page || 1;
+            const pending = req.query.pending || false;
+
+            const loanRepository = new LoanRepository;
+            const loans = await loanRepository.getByBook(id, page, pending); 
+            res.status(200).json(loans);    
+        } catch (error) {
+            console.log(error)
             next(error); 
         }
     }

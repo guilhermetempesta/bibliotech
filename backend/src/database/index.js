@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/database.js')[env];
 
-console.log('Carregar configurações do banco de dados');
+console.log('Carregar configuracoes do banco de dados');
 
 const models = {};
 const modelsDir = path.join(__dirname, '../models');

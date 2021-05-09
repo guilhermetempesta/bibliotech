@@ -5,13 +5,14 @@ class LoanReturnService {
 
     async execute (date, loanId, userId) {
         try {
-            validate(date, loanId);
-            const [updated] = await Loan.update(
-                { returnedAt: date },
-                { where: { 
-                    id: loanId,
-                    returnedAt: null,
+            validate(date, loanId, userId);
+            const [updated] = await Loan.update({ 
+                    returnedAt: date,
                     userReturnId: userId  
+                },{ 
+                where: { 
+                    id: loanId,
+                    returnedAt: null 
                 }},
             );
             return updated;
