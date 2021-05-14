@@ -16,7 +16,7 @@ class AuthController {
       try {
           const userData = req.body || null
           if (userData) {
-              const payload = await tokens.access.check(userData.accessToken);
+              const payload = await tokens.access.check(userData.token);
               if (payload) return res.send(true)
           }                        
       } catch (error) {

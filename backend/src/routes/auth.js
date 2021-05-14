@@ -15,4 +15,7 @@ module.exports = app => {
 
     app.route('/login')
         .post(authentication.local, auth.login)
+
+    app.route('/validate-token')
+        .post(auth.validateToken)
 }    
