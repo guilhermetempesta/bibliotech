@@ -3,11 +3,11 @@
     <PageTitle icon="fa fa-home" main="Início"
       sub="Bibliotech" />
     <div class="shortcuts">
-      <Shortcut title="Alunos"
-        icon="fa fa-id-card" color="#3bc480" />
-      <Shortcut title="Autores" 
+      <Shortcut title="Alunos" path="/students"
+        icon="fa fa-graduation-cap" color="#3bc480" />
+      <Shortcut title="Autores" path="/authors"
         icon="fa fa-address-book" color="#d54d50" />
-      <Shortcut title="Livros"
+      <Shortcut title="Livros" path="/books"
         icon="fa fa-book" color="#3282cd" />
     </div>
   </div>

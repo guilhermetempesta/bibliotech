@@ -3,7 +3,7 @@
     <b-form>
       <input id="user-id" type="hidden" v-model="user.id" />
       <b-row>
-        <b-col md="3" sm="6">
+        <b-col md="6" sm="12">
           <b-form-group label="Nome completo:" label-for="user-full-name">
             <b-form-input id="user-full-name" type="text"
               v-model="user.name" required

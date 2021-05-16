@@ -1,28 +1,32 @@
 <template>
-  <div class="stat">
-    <div class="stat-icon">
+  <router-link :to="link" class="shortcut" style="text-decoration: none;" >
+    <div class="shortcut-icon">
       <i :class="icon" :style="style"></i>
-    </div>
-    <div class="stat-info">
-      <span class="stat-title">{{ title }}</span>
-    </div>
-  </div>
+    </div> 
+    <div class="shortcut-info">
+      <span class="shortcut-title">{{ title }}</span>
+    </div>  
+  </router-link>
 </template>
 
 <script>
 export default {
   name: 'Shortcut',
-  props: ['title', 'icon', 'color'],
+  props: ['title', 'path', 'icon', 'color'],
   computed: {
     style() {
       return "color: " + (this.color || "#000")
+    },
+    link() {
+      return `${this.path}`
     }
   } 
 }
 </script>
 
 <style>
-  .stat {
+
+  .shortcut {
     flex: 1;
     display: flex;
     border-radius: 8px;
@@ -34,23 +38,23 @@ export default {
     box-shadow: 0 1px 5px rgba(0,0,0,0.15);
   }
 
-  .stat-icon {
+  .shortcut-icon {
     display: flex;
     align-items: center;
   }
 
-  .stat-icon i {
+  .shortcut-icon i {
     font-size: 5rem;
   }
 
-  .stat-info {
+  .shortcut-info {
     flex: 1; /* componente cresce em um flex container */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   }
 
-  .stat-title {
+  .shortcut-title {
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;

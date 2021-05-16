@@ -1,6 +1,6 @@
 <template>
 	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
-		<Header title="Bibliotech - Gestão de obras literárias"
+		<Header title="BIBLIOTECH"
 			:hideToggle="!user"
 			:hideUserDropdown="!user" />
 		<Menu v-if="user" />

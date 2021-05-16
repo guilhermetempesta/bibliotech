@@ -2,10 +2,16 @@
   <header class="header">
     <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
       <i class="fa fa-lg" :class="icon"></i>
-    </a>
+    </a>    
     <h1 class="title">
-      <router-link v-if="loggedUser" to="/">{{ title }}</router-link>
-      <router-link v-else to="">{{ title }}</router-link>
+      <router-link v-if="loggedUser" to="/"> 
+        <!-- {{ title }} -->
+        <img src="@/assets/logo_side_invert.png" alt="">
+      </router-link>
+      <router-link v-else to="">
+        <img src="@/assets/logo_side_invert.png" alt="">
+        <!-- {{ title }} -->
+      </router-link>
     </h1>
     <UserDropdown v-if="!hideUserDropdown" />
   </header>
@@ -23,7 +29,8 @@ export default {
   },
   computed: {
     icon() {
-      return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
+      // return this.$store.state.isMenuVisible ? "fa-angle-left" : "fa-angle-down"
+      return "fa-bars"
     },
     loggedUser() {
       return this.$store.state.user
@@ -40,7 +47,8 @@ export default {
 <style>
   .header{
     grid-area: header;
-    background: linear-gradient(to right, #1e469a, #49a7c1);
+    /* background: linear-gradient(to right, #1e469a, #49a7c1); */
+    background: linear-gradient(to right, #003153, #376B8C);
     color: #efefef;
     display: flex;
     justify-content: center;
@@ -52,7 +60,8 @@ export default {
     color: #fff;
     font-weight: 100;
     flex-grow: 1;
-    text-align: center;
+    text-align: left;
+    margin-top: 10px;
   }
 
   .title a {
@@ -78,7 +87,7 @@ export default {
   }
 
   header.header > a.toggle:hover {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3);
     color: #fff;
   }
 </style>

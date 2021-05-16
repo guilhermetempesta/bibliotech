@@ -1,7 +1,7 @@
 <template>
   <div class="auth-content">
     <div class="auth-modal">
-      <img src="@/assets/bibliotech_logo.png" width="180" alt="Logo">
+      <img src="@/assets/logo.png" width="200" alt="Logo">
       <hr>
       <div class="auth-title">Login</div>
       <input v-model="user.username" name="username" type="text" placeholder="Usuário">
