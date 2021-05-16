@@ -24,17 +24,33 @@ class BookRepository {
         }
     }
 
-    async get() {
+    async get(query) {
         try {
-            const books = await Book.findAll({
-                attributes: ['id', 'code', 'title', 'publisher', 'localization'],
-                include: [{
-                    association: 'author',
-                    attributes: ['id', 'name']
-                }],
-                order: ['id']
-            })
-            return books
+            const page = query.page  
+            if (!page) {
+                const books = await Book.findAll({
+                    attributes: ['id', 'code', 'title', 'publisher', 'localization'],
+                    include: [{
+                        association: 'author',
+                        attributes: ['id', 'name']
+                    }],
+                    order: ['title']
+                })
+                return books
+            } else {
+                const limit = 10 // limite usado para paginacao
+                const { count, rows } = await Book.findAndCountAll({
+                    attributes: ['id', 'code', 'title', 'publisher', 'localization'],
+                    include: [{
+                        association: 'author',
+                        attributes: ['id', 'name']
+                    }],
+                    order: ['title'],
+                    limit: limit,                // limite por pagina  
+                    offset: page * limit - limit // deslocamento
+                })
+                return { data: rows, count, limit}
+            }              
         } catch (err) {
             throw err
         }

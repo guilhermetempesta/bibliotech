@@ -9,8 +9,8 @@ class AuthorController {
                 name: req.body.name
             };
             const authorRepository = new AuthorRepository;
-            await authorRepository.create(author);
-            res.status(201).send();
+            const newAuthor = await authorRepository.create(author);
+            res.status(201).json(newAuthor);
         } catch (error) {
             next(error); 
         } 
@@ -32,8 +32,9 @@ class AuthorController {
 
     async index (req, res, next) {
         try {                        
+            const query = req.query;
             const authorRepository = new AuthorRepository;
-            const authors = await authorRepository.get(); 
+            const authors = await authorRepository.get(query); 
             res.status(200).json(authors);    
         } catch (error) {
             next(error); 

@@ -4,7 +4,7 @@ const { MethodNotAllowedError, NotFoundError } = require('../utils/errors');
 
 class AuthorRepository {
 
-    async create(data) {
+    async create (data) {
         try {   
             const author = await Author.create(data);   
             return author;     
@@ -13,7 +13,7 @@ class AuthorRepository {
         }
     }
 
-    async update(data) {
+    async update (data) {
         try {
             await Author.update(data,{   
                     where: {id: data.id}
@@ -24,19 +24,31 @@ class AuthorRepository {
         }
     }
 
-    async get() {
+    async get (query) {
         try {
-            const authors = await Author.findAll({
-                attributes: ['id', 'name'],
-                order: ['id']
-            })
-            return authors
+            const page = query.page  
+            if (!page) {
+                const authors = await Author.findAll({
+                    attributes: ['id', 'name'],
+                    order: ['name']
+                })
+                return authors
+            } else {
+                const limit = 10 // limite usado para paginacao
+                const { count, rows } = await Author.findAndCountAll({
+                    attributes: ['id', 'name'],
+                    order: ['name'],
+                    limit: limit,                // limite por pagina  
+                    offset: page * limit - limit // deslocamento
+                })
+                return { data: rows, count, limit}
+            }
         } catch (err) {
             throw err
         }
     }
 
-    async getById(id) {
+    async getById (id) {
         try {
             const author = await Author.findOne({ 
                 attributes: ['id', 'name'],
@@ -48,7 +60,7 @@ class AuthorRepository {
         }
     }
 
-    async count() {
+    async count () {
         try {
             const count = await Author.count();
             return count;
@@ -57,7 +69,7 @@ class AuthorRepository {
         }
     }
 
-    async remove(id) {
+    async remove (id) {
         try { 
             const books = await Book.count({
                 where: { authorId: id }

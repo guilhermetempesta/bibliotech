@@ -1,11 +1,12 @@
 const { BookRepository } = require('../repositories/BookRepository');
-const { NotFoundError } = require('../utils/errors');
+const { NotFoundError, InvalidArgumentError } = require('../utils/errors');
 
 class BookController {
 
     async store (req, res, next) {
         try {
             const book = req.body;
+            if (!book.authorId) throw new InvalidArgumentError('Autor não informado!')
             const bookRepository = new BookRepository;
             await bookRepository.create(book);
             res.status(201).send();
@@ -28,8 +29,9 @@ class BookController {
 
     async index (req, res, next) {
         try {                        
+            const query = req.query;
             const bookRepository = new BookRepository;
-            const books = await bookRepository.get(); 
+            const books = await bookRepository.get(query); 
             res.status(200).json(books);    
         } catch (error) {
             next(error); 
@@ -41,9 +43,7 @@ class BookController {
             const id = req.params.id;
             const bookRepository = new BookRepository;
             const book = await bookRepository.getById(id); 
-            if (!book) {
-                throw new NotFoundError('Livro não encontrado!');
-            }
+            if (!book) throw new NotFoundError('Livro não encontrado!');
             res.status(200).json(book);    
         } catch (error) {
             next(error); 

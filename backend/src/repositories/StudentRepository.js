@@ -24,13 +24,25 @@ class StudentRepository {
         }
     }
 
-    async get() {
+    async get (query) {
         try {
-            const students = await Student.findAll({
-                attributes: ['id', 'name', 'phone', 'class'],
-                order: ['id']
-            })
-            return students
+            const page = query.page  
+            if (!page) {
+                const students = await Student.findAll({
+                    attributes: ['id', 'name', 'phone', 'class'],
+                    order: ['id']
+                })
+                return students
+            } else {
+                const limit = 10;
+                const { count, rows } = await Student.findAndCountAll({
+                    attributes: ['id', 'name', 'phone', 'class'],
+                    order: ['id'],
+                    limit: limit,
+                    offset: page * limit - limit // deslocamento
+                })
+                return { data: rows, count, limit}
+            }
         } catch (err) {
             throw err
         }
