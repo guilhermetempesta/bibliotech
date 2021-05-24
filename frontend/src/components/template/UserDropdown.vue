@@ -10,6 +10,9 @@
     <div class="user-dropdown-content">
       <router-link to="/admin" v-if="user.admin">
         <i class="fa fa-cogs"></i> Administração
+      </router-link>      
+      <router-link to="change-pass">
+        <i class="fas fa-key"></i> Alterar Senha
       </router-link>
       <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Sair</a>
     </div>

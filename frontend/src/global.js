@@ -29,5 +29,15 @@ export function decodeToken(token) {
   return JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
 }
 
+export function formatDate(date) {
+  const formatted = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON().slice(0, 10)
+  return formatted
+}
+
+export function addDaysOnDate(date, days) {
+  date.setDate(date.getDate() + days)
+  date.getDate()
+  return date
+}
 
 export default { baseApiUrl, showError, userKey }

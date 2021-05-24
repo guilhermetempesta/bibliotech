@@ -59,7 +59,7 @@
           <i class="fa fa-pencil"></i>
         </b-button>
         <b-button variant="danger" @click="loadUser(data.item, 'remove')" class="mr-2">
-          <i class="fa fa-trash"></i>
+          <i class="fa fa-times"></i>
         </b-button>
       </template>
     </b-table>

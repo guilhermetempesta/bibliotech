@@ -5,7 +5,7 @@
     <div class="admin-pages-tabs">
       <b-card no-body>
         <b-tabs card>
-          <b-tab title="Usuários" active>
+          <b-tab title="Cadastrar Usuários" active>
             <UserAdmin />
           </b-tab>
         </b-tabs>
@@ -20,7 +20,7 @@ import UserAdmin from './UserAdmin'
 
 export default {
   name: 'AdminPages',
-  components: { PageTitle, UserAdmin}
+  components: { PageTitle, UserAdmin }
 }
 </script>
 

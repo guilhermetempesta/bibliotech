@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <span>Copyright <strong>Guilherme L. Tempesta ©</strong> 2021</span>
+    <span>Copyright <strong>Bibliotech ©</strong> 2021</span>
   </footer>
 </template>
 

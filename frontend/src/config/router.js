@@ -6,9 +6,10 @@ import AdminPages from '@/components/admin/AdminPages'
 import Author from '@/components/register/Author'
 import Book from '@/components/register/Book'
 import Student from '@/components/register/Student'
-import ArticlesByCategory from '@/components/article/ArticlesByCategory'
-import ArticleById from '@/components/article/ArticleById'
+import Loan from '@/components/loan/Loan'
+import ReturnLoan from '@/components/loan/ReturnLoan'
 import Auth from '@/components/auth/Auth'
+import UserChangePass from '@/components/auth/UserChangePass'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,10 @@ const routes = [{
   name: 'adminPages',
   path: '/admin',
   component: AdminPages
+}, {
+  name: 'userChangePass',
+  path: '/change-pass',
+  component: UserChangePass
 }, {
   name: 'author',
   path: '/authors',
@@ -33,13 +38,13 @@ const routes = [{
   path: '/books',
   component: Book
 }, {
-  name: 'articlesByCategory',
-  path: '/categories/:id/articles',
-  component: ArticlesByCategory
+  name: 'loan',
+  path: '/loans',
+  component: Loan
 }, {
-  name: 'articleById',
-  path: '/articles/:id',
-  component: ArticleById
+  name: 'returnLoan',
+  path: '/return',
+  component: ReturnLoan
 }, {
   name: 'auth',
   path: '/auth',

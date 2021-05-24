@@ -1,6 +1,13 @@
 <template>
   <aside class="menu" v-show="isMenuVisible">
-    
+    <hr>
+    <router-link to="/">Início</router-link>
+    <router-link to="/students">Alunos</router-link>
+    <router-link to="/authors">Autores</router-link>
+    <router-link to="/books">Livros</router-link>
+    <router-link to="/loans">Empréstimos</router-link>
+    <router-link to="/return">Devoluções</router-link>
+    <router-link to="/report">Relatórios</router-link>
   </aside>
 </template>
 
@@ -9,14 +16,14 @@ import { mapState } from 'vuex'
 
 export default {
   name: "Menu",
-  components: {  },
+  components: {},
   computed: mapState(['isMenuVisible']),
   data: function() {
     return {
       
     }
   },
-  methods: {
+  methods: { 
     
   },
   mounted() {
@@ -28,58 +35,26 @@ export default {
 <style>
   .menu {
     grid-area: menu;
-    /* background: linear-gradient(to right, #232526, #414345); */
-    /* background: linear-gradient(to right, #003153, #0d476b); */
     background-color: #003153;
-
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap; 
+    /* flex-wrap: wrap;  */
+    overflow: auto;
   }
 
-  .menu a,
+  .menu a {
+    color: #d1d1d1;
+    text-decoration: none;
+
+    padding: 8px 8px 8px 32px;
+    font-size: 25px;
+    display: block;
+    transition: 0.3s;
+  }
+
   .menu a:hover {
     color: #fff;
     text-decoration: none;
-  }
-
-  .menu .tree-node.selected > .tree-content,
-  .menu .tree-node .tree-content:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-
-  .tree-arrow.has-child {
-    filter: brightness(2);
-  }
-
-  .menu .menu-filter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin: 20px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #AAA;
-  }
-
-  .menu .menu-filter i {
-    color: #AAA;
-    margin-right: 10px;
-  }
-
-  .menu input {
-    color: #CCC;
-    font-size: 1.1rem;
-    border: 0;
-    outline: 0;
-    width: 100%;
-    background: transparent;
-  }
-
-  .tree-filter-empty {
-    color: #CCC;
-    margin-left: 20px;
-    font-size: 1.1rem;
   }
   
 </style>

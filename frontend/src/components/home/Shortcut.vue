@@ -36,6 +36,7 @@ export default {
     padding: 20px;
     border: 1px solid rgba(0,0,0,0.2);
     box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+    max-width: 300px;
   }
 
   .shortcut-icon {

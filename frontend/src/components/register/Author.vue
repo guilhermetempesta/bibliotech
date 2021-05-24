@@ -25,7 +25,7 @@
             <i class="fa fa-pencil"></i>
           </b-button>
           <b-button size="sm" variant="danger" @click="loadAuthor(data.item, 'remove')" class="mr-2">
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-times"></i>
           </b-button>
         </template>
       </b-table>

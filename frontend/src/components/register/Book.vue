@@ -85,7 +85,7 @@
             <i class="fa fa-pencil"></i>
           </b-button>
           <b-button variant="danger" @click="loadBook(data.item, 'remove')" class="mr-2">
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-times"></i>
           </b-button>
         </template>
       </b-table>
@@ -179,7 +179,6 @@ export default {
     loadAuthors() {
       const url = `${baseApiUrl}/authors`
       axios.get(url).then(res => {
-        console.log(res.data)
         this.authors = res.data.map(author => {
           return { value: author.id, text: author.name }
         })

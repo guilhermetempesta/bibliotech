@@ -3,7 +3,7 @@
 		<Header title="BIBLIOTECH"
 			:hideToggle="!user"
 			:hideUserDropdown="!user" />
-		<Menu v-if="user" />
+		<Menu v-if="user"/>
 		<Loading v-if="validatingToken" />
 		<Content v-else />
 		<Footer />
@@ -84,11 +84,11 @@ export default {
 		height: 100vh;
 		display: grid;
 		grid-template-rows: 60px 1fr 40px;
-		grid-template-columns: 300px 1fr;
+		grid-template-columns: 280px 1fr;
 		grid-template-areas:
 			"header header"
 			"menu content"
-			"menu footer";
+			"menu footer";	
 	}		
 
 	#app.hide-menu {

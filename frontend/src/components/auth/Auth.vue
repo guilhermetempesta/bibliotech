@@ -1,11 +1,22 @@
 <template>
   <div class="auth-content">
     <div class="auth-modal">
-      <img src="@/assets/logo.png" width="200" alt="Logo">
+      <img src="@/assets/logo_side_invert.png" width="200" alt="Logo">
       <hr>
-      <div class="auth-title">Login</div>
-      <input v-model="user.username" name="username" type="text" placeholder="Usuário">
-      <input v-model="user.password" name="password" type="password" placeholder="Senha">
+      <b-input-group class="mb-2">
+        <b-input-group-prepend is-text>
+          <b-icon class="fas fa-user" id="auth-icon"></b-icon>
+        </b-input-group-prepend>
+        <b-form-input v-model="user.username" name="username" autofocus
+          type="text" placeholder="Usuário" autocomplete="off"/>
+      </b-input-group>
+      <b-input-group class="mb-2">
+        <b-input-group-prepend is-text>
+          <b-icon class="fas fa-key" id="auth-icon"></b-icon>
+        </b-input-group-prepend>
+        <b-form-input v-model="user.password" name="password" 
+          type="password" placeholder="Senha"/>
+      </b-input-group>
       <b-button @click="signin">Entrar</b-button>
     </div>
   </div>  
@@ -54,11 +65,13 @@ export default {
   }
 
   .auth-modal {
-    background-color: #FFF;
+    background-color: #003153;
+    /* background-color: #FFF; */
     width: 350px;
     padding: 35px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-    
+    border-radius: 10px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,17 +84,11 @@ export default {
     margin-bottom: 15px;
   }
 
-  .auth-modal input {
-    border: 1px solid #BBB;
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 3px 8px;
-    outline: none;
-  }
-
   .auth-modal button {
     align-self: flex-end;
-    background-color: #2460ae;
+    /* background-color: #2460ae;
+    color: #FFF; */
+    background-color: #376B8C;
     color: #FFF;
     padding: 5px 15px;
   }
@@ -95,6 +102,10 @@ export default {
       rgba(120,120,120,0.75), 
       rgba(120,120,120,0) 
     );
+  }
+
+  #auth-icon {
+    width: 15px;
   }
   
 </style>
