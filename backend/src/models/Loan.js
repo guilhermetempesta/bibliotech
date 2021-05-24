@@ -25,6 +25,14 @@ class Loan extends Model {
             comments: {
                 type: DataTypes.STRING,
             },
+            bookNumber: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    notNull: { msg: 'Número do livro não informado!' },
+                    notEmpty: { msg: 'Número do livro não informado!' }
+                }
+            },
         }, {
             sequelize,
             tableName: 'loans',                     

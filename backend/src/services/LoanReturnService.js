@@ -24,7 +24,10 @@ class LoanReturnService {
     async cancel (loanId) {
         try {
             const [ updated ] = await Loan.update(
-                { returnedAt: null },
+                { 
+                  returnedAt: null,
+                  userReturnId: null
+                },
                 { where: { 
                     id: loanId 
                 }},

@@ -90,10 +90,10 @@ class UserController {
 
     async changePassword (req, res, next) {
         try {   
-            const { oldPassword, newPassword, confirmPassword } = req.body;
-            
+            const { currentPassword, newPassword, confirmPassword } = req.body;
+            const id = req.user.id;
             const changePassword = new ChangePasswordService();
-            await changePassword.execute(oldPassword, newPassword, confirmPassword);
+            await changePassword.execute(id, currentPassword, newPassword, confirmPassword);
 
             res.status(200).json({ 
                 message: "Sua senha foi alterada com sucesso!" 

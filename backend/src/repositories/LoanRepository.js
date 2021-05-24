@@ -26,12 +26,14 @@ class LoanRepository {
 
     async get(query) {
         try {
-            const filters = queryFilter(query)
-            const page = query.page || 1  
-            const limit = 200 // limite usado para paginacao 
+            const filters = queryFilter(query);
+            const page = query.page || 1;  
+            const limit = 200; // limite usado para paginacao 
+            let orderBy = [];
+            (query.orderBy==='desc') ? orderBy = [['loanDate', 'DESC']] : orderBy = ['loanDate']            
 
             const { count, rows } = await Loan.findAndCountAll({
-                attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments'],
+                attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments', 'bookNumber'],
                 where: filters,
                 include: [{
                     association: 'student',
@@ -50,7 +52,7 @@ class LoanRepository {
                     association: 'userReturn',
                     attributes: ['id', 'name']
                 }],
-                order: ['id'],
+                order: orderBy,
                 limit: limit,                // limite por pagina  
                 offset: page * limit - limit // deslocamento
             })
@@ -63,7 +65,7 @@ class LoanRepository {
     async getById(id) {
         try {
             const loan = await Loan.findOne({ 
-              attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments'],
+              attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments', 'bookNumber'],
               include: [{
                 association: 'student',
                 attributes: ['id', 'name', 'phone', 'class']
@@ -117,7 +119,7 @@ class LoanRepository {
 
             const limit = 50; // limite usado para paginacao            
             const { count, rows } = await Loan.findAndCountAll({ 
-                attributes: [ 'id', 'loanDate', 'returnDate', 'returnedAt'],
+                attributes: [ 'id', 'loanDate', 'returnDate', 'returnedAt', 'bookNumber'],
                 include: [{
                     association: 'book',
                     attributes: ['id', 'code', 'title']

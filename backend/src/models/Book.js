@@ -4,12 +4,7 @@ class Book extends Model {
     static init(sequelize) {
         super.init({
             code: {
-                type: DataTypes.STRING,
-                allowNull: false,
-                validate: {
-                    notNull: { msg: 'Código não informado!' },
-                    notEmpty: { msg: 'Código não informado!' }
-                }
+                type: DataTypes.STRING
             },
             title: {
                 type: DataTypes.STRING,

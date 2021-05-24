@@ -30,14 +30,14 @@ class StudentRepository {
             if (!page) {
                 const students = await Student.findAll({
                     attributes: ['id', 'name', 'phone', 'class'],
-                    order: ['id']
+                    order: ['name']
                 })
                 return students
             } else {
                 const limit = 10;
                 const { count, rows } = await Student.findAndCountAll({
                     attributes: ['id', 'name', 'phone', 'class'],
-                    order: ['id'],
+                    order: ['name'],
                     limit: limit,
                     offset: page * limit - limit // deslocamento
                 })

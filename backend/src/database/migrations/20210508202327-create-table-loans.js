@@ -23,13 +23,6 @@ module.exports = {
       comments: {
         type: Sequelize.STRING,
       },
-      book_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: { model: 'books', key: 'id' },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-      }, 
       student_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -37,6 +30,16 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
       }, 
+      book_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: { model: 'books', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+      }, 
+      book_number: {
+        type: Sequelize.STRING,
+      },
       user_loan_id: {
           type: Sequelize.UUID,
           allowNull: false,

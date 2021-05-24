@@ -4,10 +4,10 @@ const { InvalidArgumentError, BadRequestError } = require('../utils/errors');
 
 class ChangePasswordService {
 
-    async execute (oldPassword, newPassword, confirmPassword) {
+    async execute (id, currentPassword, newPassword, confirmPassword) {
         try {
-            if ((!oldPassword) || (oldPassword.trim()==='')) { 
-                throw new InvalidArgumentError ('Senha antiga não informada!'); 
+            if ((!currentPassword) || (currentPassword.trim()==='')) { 
+                throw new InvalidArgumentError ('Senha atual não informada!'); 
             }
             if ((!newPassword) || (newPassword.trim()==='')) { 
                 throw new InvalidArgumentError ('Nova senha não informada!'); 
@@ -23,11 +23,11 @@ class ChangePasswordService {
             
             const passwordFromDB = await userRepository.getPassword(id);
             if(!passwordFromDB) {
-                throw new BadRequestError('Erro ao verificar senha.')
+                throw new BadRequestError('Erro ao verificar senha!')
             }
-            const matched = bcrypt.compareSync(oldPassword, passwordFromDB)
+            const matched = bcrypt.compareSync(currentPassword, passwordFromDB)
             if (!matched) { 
-                throw new Error ('As senhas não conferem!') 
+                throw new Error ('A senha atual está incorreta!') 
             }
             await userRepository.changePassword(id, newPassword);
 

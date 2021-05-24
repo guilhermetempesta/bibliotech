@@ -16,11 +16,11 @@ module.exports = app => {
     .put(authorization("updateAny", "loans"), loan.update)         
     .delete(authorization("deleteAny", "loans"), loan.destroy)   
 
-  app.route('/loan-return')
+  app.route('/return-loan')
     .all(authentication.bearer)
     .patch(authorization("updateAny", "loanReturn"), loan.loanReturn)          
 
-  app.route('/loan-cancel-return/:id')
+  app.route('/cancel-return/:id')
     .all(authentication.bearer)
     .patch(authorization("updateAny", "loanReturn"), loan.cancelLoanReturn)
 

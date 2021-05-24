@@ -18,5 +18,5 @@ module.exports = app => {
 
   app.route('/change-password')  
     .all(authentication.bearer)
-    .patch(authorization("deleteAny", "changePassword"), user.changePassword)
+    .patch(user.changePassword)
 }
