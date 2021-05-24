@@ -82,6 +82,12 @@ export default {
         newPassword: '',
         confirmPassword: ''
       }
+      this.currentPasswordFieldType = "password"
+      this.newPasswordFieldType = "password"
+      this.confirmPasswordFieldType = "password"
+      this.iconCurrentPassword = "far fa-eye"
+      this.iconNewPassword = "far fa-eye"
+      this.iconConfirmPassword = "far fa-eye"
       this.$refs.currentPass.focus()
     },
     save() { 
