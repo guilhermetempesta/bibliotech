@@ -7,6 +7,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 600,
     height: 300,
+    icon: __dirname + '/src/views/assets/bibliotech.ico',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
