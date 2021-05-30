@@ -8,12 +8,16 @@ module.exports = app => {
   app.route('/students')
     .all(authentication.bearer)
     .post(authorization("createAny", "students"), student.store)
-    .get(authorization("readAny", "students"), student.index)
+    .get(authorization("readAny", "students"), student.index) 
+    
+  app.route('/students/class')
+    .all(authentication.bearer)
+    .get(authorization("readAny", "students"), student.indexClass) 
 
   app.route('/students/:id')
     .all(authentication.bearer)
     .get(authorization("readAny", "students"), student.show)         
     .put(authorization("updateAny", "students"), student.update)         
-    .delete(authorization("deleteAny", "students"), student.destroy)   
+    .delete(authorization("deleteAny", "students"), student.destroy) 
     
 }

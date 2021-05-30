@@ -30,8 +30,8 @@ class StudentController {
         try {                        
             const query = req.query;
             const studentRepository = new StudentRepository;
-            const authors = await studentRepository.get(query); 
-            res.status(200).json(authors);    
+            const students = await studentRepository.get(query); 
+            res.status(200).json(students);    
         } catch (error) {
             next(error); 
         }
@@ -60,7 +60,17 @@ class StudentController {
         } catch (error) {
             next(error); 
         }
-    }     
+    }   
+    
+    async indexClass (req, res, next) {
+        try {                        
+            const studentRepository = new StudentRepository;
+            const studentClass = await studentRepository.getClass(); 
+            res.status(200).json(studentClass);    
+        } catch (error) {
+            next(error); 
+        }
+    } 
 }
 
 module.exports = { StudentController }

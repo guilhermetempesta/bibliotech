@@ -26,11 +26,19 @@ class StudentRepository {
 
     async get (query) {
         try {
-            const page = query.page  
+            const { studentClass, page, orderBy } = query;
+
+            let filter = {};
+            if (studentClass) filter = {...filter, class: studentClass};
+
+            let ordenation = [];
+            if (orderBy) ordenation = setOrderBy(orderBy);
+
             if (!page) {
                 const students = await Student.findAll({
-                    attributes: ['id', 'name', 'phone', 'class'],
-                    order: ['name']
+                    attributes: ['id', 'name', 'phone', 'class'],                
+                    where: filter,
+                    order: ordenation
                 })
                 return students
             } else {
@@ -55,6 +63,18 @@ class StudentRepository {
                 where: {id: id} 
             })
             return student;
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async getClass() {
+        try {
+            const studentClass = await Student.findAll({ 
+                attributes: ['class'],
+                group: ['class']
+            })
+            return studentClass;
         } catch (err) {
             throw err
         }
@@ -87,3 +107,8 @@ class StudentRepository {
 }
 
 module.exports = { StudentRepository }
+
+function setOrderBy(option) {
+    if (option==0) return ['name']  
+    if (option==1) return ['class'] 
+}

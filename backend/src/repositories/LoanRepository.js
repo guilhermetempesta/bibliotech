@@ -1,6 +1,7 @@
 const Loan = require('../models/Loan');
 const { Sequelize, Op } = require('sequelize');
 const { NotFoundError } = require('../utils/errors');
+const { format } = require('date-fns');
 
 class LoanRepository {
 
@@ -26,37 +27,65 @@ class LoanRepository {
 
     async get(query) {
         try {
-            const filters = queryFilter(query);
-            const page = query.page || 1;  
-            const limit = 200; // limite usado para paginacao 
+            const page = query.page;
+            const filters = queryFilter(query);              
             let orderBy = [];
             (query.orderBy==='desc') ? orderBy = [['loanDate', 'DESC']] : orderBy = ['loanDate']            
-
-            const { count, rows } = await Loan.findAndCountAll({
-                attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments', 'bookNumber'],
-                where: filters,
-                include: [{
-                    association: 'student',
-                    attributes: ['id', 'name', 'phone', 'class']
-                },{
-                    association: 'book',
-                    attributes: ['id', 'code', 'title', 'publisher'],
+    
+            if (!page) {                
+                const loans = await Loan.findAll({
+                    attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments', 'bookNumber'],
+                    where: filters,
                     include: [{
-                      association: 'author',
-                      attributes: ['id', 'name'],
-                    }] 
-                },{
-                    association: 'userLoan',
-                    attributes: ['id', 'name']
-                },{
-                    association: 'userReturn',
-                    attributes: ['id', 'name']
-                }],
-                order: orderBy,
-                limit: limit,                // limite por pagina  
-                offset: page * limit - limit // deslocamento
-            })
-            return { data: rows, count, limit}  
+                        association: 'student',
+                        attributes: ['id', 'name', 'phone', 'class']
+                    },{
+                        association: 'book',
+                        attributes: ['id', 'code', 'title', 'publisher'],
+                        include: [{
+                          association: 'author',
+                          attributes: ['id', 'name'],
+                        }] 
+                    },{
+                        association: 'userLoan',
+                        attributes: ['id', 'name']
+                    },{
+                        association: 'userReturn',
+                        attributes: ['id', 'name']
+                    }],
+                    order: orderBy,
+                })
+                return loans
+            } else {
+                const limit = 200; // limite usado para paginacao 
+                
+                const { count, rows } = await Loan.findAndCountAll({
+                    attributes: ['id', 'loanDate', 'returnDate', 'returnedAt', 'comments', 'bookNumber'],
+                    where: filters,
+                    include: [{
+                        association: 'student',
+                        attributes: ['id', 'name', 'phone', 'class']
+                    },{
+                        association: 'book',
+                        attributes: ['id', 'code', 'title', 'publisher'],
+                        include: [{
+                          association: 'author',
+                          attributes: ['id', 'name'],
+                        }] 
+                    },{
+                        association: 'userLoan',
+                        attributes: ['id', 'name']
+                    },{
+                        association: 'userReturn',
+                        attributes: ['id', 'name']
+                    }],
+                    order: orderBy,
+                    limit: limit,                // limite por pagina  
+                    offset: page * limit - limit // deslocamento
+                })
+                return { data: rows, count, limit}
+            }    
+              
         } catch (err) {
             throw err
         }
@@ -117,8 +146,7 @@ class LoanRepository {
             let filters = { bookId: id }
             if (pending) filters = {...filters, returnedAt: null} 
 
-            const limit = 50; // limite usado para paginacao            
-            const { count, rows } = await Loan.findAndCountAll({ 
+            const loans = await Loan.findAll({ 
                 attributes: [ 'id', 'loanDate', 'returnDate', 'returnedAt', 'bookNumber'],
                 include: [{
                     association: 'book',
@@ -128,11 +156,9 @@ class LoanRepository {
                     attributes: ['id', 'name', 'phone', 'class']
                 }],                
                 where: filters,
-                order: ['id'],
-                limit: limit,                // limite por pagina  
-                offset: page * limit - limit // deslocamento                 
+                order: ['loanDate']                 
             })
-            return { data: rows, count, limit}  
+            return loans 
         } catch (err) {
             throw err
         }
@@ -143,10 +169,13 @@ module.exports = { LoanRepository }
 
 
 function queryFilter (queryParams) {
+  let today = format(new Date(), 'yyyy-MM-dd')
   let filters = {};
 
-  const { book, student, status, initialLoanDate, finalLoanDate, initialReturnDate, finalReturnDate, 
-          initialReturnedAt, finalReturnedAt, userLoan, userReturn } = queryParams;
+  const { 
+      book, student, status, initialLoanDate, finalLoanDate, initialReturnDate, finalReturnDate, 
+      initialReturnedAt, finalReturnedAt, userLoan, userReturn, onlyLate, studentClass 
+  } = queryParams;
   
   if (userLoan) {
       filters = {...filters, userLoanId: userLoan};
@@ -156,12 +185,20 @@ function queryFilter (queryParams) {
     filters = {...filters, userReturnId: userReturn};
   }
 
+  if (onlyLate) {
+    filters = {...filters, returnDate: {[Op.lt]: today}}
+  }
+
   if (book) {
       filters = {...filters, bookId: book};
   }
 
   if (student) {
       filters = {...filters, studentId: student};
+  }
+
+  if (studentClass) {
+    filters = {...filters, '$student.class$': studentClass };
   }
 
   if (status) {

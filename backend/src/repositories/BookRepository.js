@@ -26,15 +26,23 @@ class BookRepository {
 
     async get(query) {
         try {
-            const page = query.page  
+            const { author, page, orderBy } = query;
+
+            let filter = {};
+            if (author) filter = {...filter, '$author.id$': author};
+
+            let ordenation = [];
+            if (orderBy) ordenation = setOrderBy(orderBy);
+
             if (!page) {
                 const books = await Book.findAll({
                     attributes: ['id', 'code', 'title', 'publisher', 'localization'],
                     include: [{
                         association: 'author',
                         attributes: ['id', 'name']
-                    }],
-                    order: ['title']
+                    }],                
+                    where: filter,
+                    order: ordenation
                 })
                 return books
             } else {
@@ -44,7 +52,7 @@ class BookRepository {
                     include: [{
                         association: 'author',
                         attributes: ['id', 'name']
-                    }],
+                    }],              
                     order: ['title'],
                     limit: limit,                // limite por pagina  
                     offset: page * limit - limit // deslocamento
@@ -119,3 +127,9 @@ class BookRepository {
 }
 
 module.exports = { BookRepository }
+
+function setOrderBy(option) {
+    if (option==0) return ['title']  
+    if (option==1) return [['author','name']]  
+    if (option==2) return ['localization'] 
+}

@@ -93,7 +93,7 @@ class LoanController {
         try {
             const id = req.params.id;
             const page = req.query.page || 1;
-            const pending = req.query.pending || false;
+            const pending = req.query.pending;
 
             const loanRepository = new LoanRepository;
             const loans = await loanRepository.getByBook(id, page, pending); 
