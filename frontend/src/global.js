@@ -40,4 +40,57 @@ export function addDaysOnDate(date, days) {
   return date
 }
 
+// Get property value by key/nested key path
+// Source: https://stackoverflow.com/questions/6491463/
+Object.byString = function(o, s) {
+  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+  s = s.replace(/^\./, '');           // strip a leading dot
+  var a = s.split('.');
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+        o = o[k];
+    } else {
+        return;
+    }
+  }
+  return o;
+}
+
+// Table body builder
+function buildTableBody(data, columns, showHeaders, headers) {
+  var body = [];
+
+  // Inserting headers
+  if(showHeaders) {
+    body.push(headers);
+  }
+  
+  // Inserting items from external data array
+  data.forEach((row) => {
+    var dataRow = [];
+    var i = 0;
+    
+    columns.forEach((column) => {
+      dataRow.push({text: Object.byString(row, column), alignment: headers[i].alignmentChild });
+      i++;
+    })
+    body.push(dataRow);          
+  });
+  return body;
+}
+
+// Func to return generated table
+export function tableReport(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
+  return {
+    table: {
+      headerRows: 1,
+      widths: witdhsDef,
+      body: buildTableBody(data, columns, showHeaders, headers)
+    },
+    layout: layoutDef,
+    style: ['table']
+  };
+}
+
 export default { baseApiUrl, showError, userKey }

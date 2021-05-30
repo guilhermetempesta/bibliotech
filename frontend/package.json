@@ -18,6 +18,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.21.3",
     "highlightjs": "^9.16.2",
+    "pdfmake": "^0.1.71",
     "vue": "^2.6.11",
     "vue-fontawesome": "0.0.2",
     "vue-gravatar": "^1.4.1",

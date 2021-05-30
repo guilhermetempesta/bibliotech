@@ -10,6 +10,12 @@ import Loan from '@/components/loan/Loan'
 import ReturnLoan from '@/components/loan/ReturnLoan'
 import Auth from '@/components/auth/Auth'
 import UserChangePass from '@/components/auth/UserChangePass'
+import Reports from '@/components/report/Reports'
+import ReportLoanedBooks from '@/components/report/ReportLoanedBooks'
+import ReportReturnedBooks from '@/components/report/ReportReturnedBooks'
+import ReportBooks from '@/components/report/ReportBooks'
+import ReportStudents from '@/components/report/ReportStudents'
+import ReportBookHistory from '@/components/report/ReportBookHistory'
 
 Vue.use(VueRouter)
 
@@ -49,6 +55,30 @@ const routes = [{
   name: 'auth',
   path: '/auth',
   component: Auth
+}, {
+  name: 'report',
+  path: '/report',
+  component: Reports
+}, {
+  name: 'reportLoanedBooks',
+  path: '/report/loaned-books',
+  component: ReportLoanedBooks
+}, {
+  name: 'reportReturnedBooks',
+  path: '/report/returned-books',
+  component: ReportReturnedBooks
+}, {
+  name: 'reportBooks',
+  path: '/report/books',
+  component: ReportBooks
+}, {
+  name: 'reportStudents',
+  path: '/report/students',
+  component: ReportStudents
+}, {
+  name: 'reportBookHistory',
+  path: '/report/book-history',
+  component: ReportBookHistory
 }]
 
 export default new VueRouter({
