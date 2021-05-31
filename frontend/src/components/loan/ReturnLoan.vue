@@ -45,7 +45,7 @@ import { baseApiUrl, showError, showSuccessMsg, formatDate } from '@/global'
 import axios from 'axios'
 
 export default {
-  name: 'Loan',
+  name: 'ReturnLoan',
   components: { PageTitle },
   data: function() {
     return {   
