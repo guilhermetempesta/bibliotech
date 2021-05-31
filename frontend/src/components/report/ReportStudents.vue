@@ -113,11 +113,8 @@ export default {
         // console.log(dd)
 
         // create the window before the callback
-        let win = window.open('', '_blank', 'autoHideMenuBar=true');
-        win.moveTo(0,0);
-        win.resizeTo(screen.availWidth, screen.availHeight)
+        pdfMake.createPdf(dd).open({}, window.open('','_blank', 'autoHideMenuBar=true'))
 
-        pdfMake.createPdf(dd).open({}, win);
       })
     },
     reset() {
