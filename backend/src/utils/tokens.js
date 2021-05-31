@@ -1,4 +1,4 @@
-const authSecret = process.env.AUTH_SECRET;
+const authSecret = ELECTRON_WEBPACK_APP_AUTH_SECRET;
 const jwt = require('jsonwebtoken');
 
 function createJwtToken (user, expiration) {
@@ -25,12 +25,9 @@ async function checkJwtToken(token) {
 
 module.exports = {
   access: {
-    expirationTime: (60 * 60 * 8 * 1), // production:  expira em 8 horas
-    expirationTimeDev: (60 * 60 * 8 * 1), // development: expira em ...
+    expiration: (60 * 60 * 8 * 1),
     create(user) {
-      let exp;
-      (process.env.NODE_ENV=='development') ? exp=this.expirationTimeDev : exp=this.expirationTime;
-      return createJwtToken(user, exp);
+      return createJwtToken(user, this.expiration);
     },
     check(token) {
       return checkJwtToken(token);

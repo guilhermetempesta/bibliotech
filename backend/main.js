@@ -1,3 +1,11 @@
+ELECTRON_WEBPACK_APP_API_PORT=3000 
+ELECTRON_WEBPACK_APP_DB_HOST="127.0.0.1"
+ELECTRON_WEBPACK_APP_DB_PORT=5432
+ELECTRON_WEBPACK_APP_DB_USERNAME="postgres"
+ELECTRON_WEBPACK_APP_DB_PASSWORD="123456"
+ELECTRON_WEBPACK_APP_DB_DATABASE="bibliotech"
+ELECTRON_WEBPACK_APP_AUTH_SECRET="UVVK2y3coScSfdtmna70rjOdCsXzsEXa+wDQdkRpsbt/+6Bj/xgfh5GzLxon/uDJY8rWCKb1qwO8crt5aYR7CyBPGP+GYP7KAwWEN9s2BCyLQ2q7aAhffQdkCc0dH6JJj2zEPPqHzQYKTbCyaZ6afZ15awjsLp39dzHyCoUb60gFCXx1NbHWLcEOXzHadxMu2NCtuBHFTp85Sxl/mXBke/BfMfwX2j621X7oto0EIkirtMmTHUSbnBQ39qU0MWxU6yPzxf1OCydamX9x7mMJMRrytyXTwps8ubV6SvBdAPcazFMh11whxknbU+ft/kVwszN4EOO2JReC66Eh4/cW6A=="
+
 const { app, BrowserWindow, Tray, Menu } = require('electron')
 const path = require('path')
 
@@ -89,3 +97,4 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+

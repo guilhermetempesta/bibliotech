@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
-const config = require('../config/database.js')[env];
+const config = require('../config/database.js')['production'];
 
 console.log('Carregar configuracoes do banco de dados');
 
